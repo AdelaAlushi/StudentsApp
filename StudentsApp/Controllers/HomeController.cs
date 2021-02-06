@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudentsApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,17 @@ namespace StudentsApp.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var context = new AppDbContext();
+
+            var students = context.Students.ToList();
+            var courses = context.Courses.ToList();
+            var studentCourse = context.StudentCourses.FirstOrDefault();
+
+            var studentname = studentCourse.Student.Name;
+
+            ViewData["MyData"] = students;
+
+            return View(students.ToList());
         }
 
         public ActionResult About()
